@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 1rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word Counter</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Type or paste your text here...">{{ input_text }}</textarea>
+        <br>
+        <button type="submit">Count Words</button>
+    </form>
+    
+    {% if result %}
+    <div class="result">
+        The word count is: <strong>{{ result.total_words }}</strong>
+    </div>
+
+    <div class="result">
+        <strong>Word Frequency:</strong>
+        <ul>
+            {% for word, count in result.word_frequency.items %}
+                <li>{{ word }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</body>
+</html>
